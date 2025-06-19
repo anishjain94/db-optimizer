@@ -21,4 +21,7 @@ class OptimizationResponse(BaseModel):
     query_analysis: QueryAnalysis
     suggestions: List[OptimizationSuggestion]
     current_performance_metrics: Optional[Dict[str, Any]]
-    estimated_performance_improvement: Optional[Dict[str, Any]] 
+    estimated_performance_improvement: Optional[Dict[str, Any]]
+
+class NaturalQueryRequest(BaseModel):
+    query: str 
