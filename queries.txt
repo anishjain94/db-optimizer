@@ -1,0 +1,8 @@
+1. select * from user_user_login where value='98989898'
+2. select * FROM org_organization org INNER JOIN org_prof_profile opp ON org.profile_id = opp.id INNER JOIN org_organization_def ood ON org.def_id = ood.id INNER JOIN org_member om ON org.id = om.organization_id WHERE om.is_deleted = 'false' and om."role" not in ('superAgentControl', 'agentPortalUser', 'businessCashier', 'businessUser');
+3. 
+
+
+// bad query
+1. SELECT * FROM org_organization org CROSS JOIN org_prof_profile opp CROSS JOIN org_organization_def ood CROSS JOIN org_member om WHERE org.profile_id = opp.id  AND org.def_id = ood.id  AND org.id = om.organization_id
+

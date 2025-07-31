@@ -49,6 +49,8 @@ class QueryOptimizer:
                     "join_type": None,
                     "join_conditions": []
                 }
+
+            print(tables)
             
             # Extract JOIN information
             for join in parsed.find_all(exp.Join):
@@ -60,6 +62,7 @@ class QueryOptimizer:
                     if join.on:
                         tables[table_name]["join_conditions"].append(str(join.on))
             
+            print(tables)
             # Get statistics for each table
             stats = {}
             for table_name, table_info in tables.items():
@@ -148,12 +151,39 @@ Table Schema and Statistics:
 
 Return your response as a JSON object with the following structure:
 {{
-  "optimized_query": "<rewritten_query_if_any>",
-  "index_suggestions": ["CREATE INDEX ...", ...],
-  "view_suggestions": ["CREATE MATERIALIZED VIEW ...", ...],
-  "partitioning_strategy": "<partitioning_recommendation>",
-  "sharding_strategy": "<sharding_recommendation>",
-  "other_suggestions": ["..."]
+  "query_optimization_suggestions": {{
+    "query": "<rewritten_optimized_query_if_any>",
+    "reason": "<explanation_of_why_this_optimization_helps>"
+  }},
+  "index_suggestions": [
+    {{
+      "query": "CREATE INDEX ...",
+      "reason": "<explanation_of_why_this_index_would_help>"
+    }},
+    ...
+  ],
+  "view_suggestions": [
+    {{
+      "query": "CREATE MATERIALIZED VIEW ...",
+      "reason": "<explanation_of_why_this_view_would_help>"
+    }},
+    ...
+  ],
+  "partitioning_strategy": {{
+    "strategy": "<partitioning_recommendation>",
+    "reason": "<explanation_of_why_partitioning_would_help>"
+  }},
+  "sharding_strategy": {{
+    "strategy": "<sharding_recommendation>",
+    "reason": "<explanation_of_why_sharding_would_help>"
+  }},
+  "other_suggestions": [
+    {{
+      "suggestion": "...",
+      "reason": "<explanation_of_why_this_suggestion_helps>"
+    }},
+    ...
+  ]
 }}
 """
         client = openai.OpenAI(api_key=self.settings.OPENAI_API_KEY)

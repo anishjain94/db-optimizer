@@ -24,4 +24,32 @@ class OptimizationResponse(BaseModel):
     estimated_performance_improvement: Optional[Dict[str, Any]]
 
 class NaturalQueryRequest(BaseModel):
-    query: str 
+    query: str
+
+class NaturalQueryResponse(BaseModel):
+    natural_query: str
+    generated_sql: str
+    tables_used: List[str]
+    confidence: str  # "high", "medium", "low"
+    results: List[Dict[str, Any]]
+    row_count: int
+    columns: List[str]
+    error: Optional[str] = None
+
+class SQLGenerationResponse(BaseModel):
+    sql_query: str
+    natural_query: str
+    tables_used: List[str]
+    confidence: str
+    error: Optional[str] = None
+    suggestions: Optional[List[str]] = None
+
+class SchemaResponse(BaseModel):
+    tables: Dict[str, Any]
+    relationships: Dict[str, List[Dict[str, Any]]]
+    sample_data: Dict[str, List[Dict[str, Any]]]
+    constraints: Dict[str, List[Dict[str, Any]]]
+    statistics: Dict[str, Any]
+
+class SchemaSummaryResponse(BaseModel):
+    summary: str 
